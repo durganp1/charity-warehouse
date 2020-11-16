@@ -6,16 +6,14 @@ import AnimalsLogo from '../src/assets/Animals.png';
 import ArtsLogo from '../src/assets/Arts.png';
 import CivilLibertiesLogo from '../src/assets/Civil-Liberties.png';
 import CommunityLogo from '../src/assets/Community.png';
+import FavoritesLogo from '../src/assets/favorites.png';
 import EnvironmentalLogo from '../src/assets/Environmental.png';
 import ReligionsLogo from '../src/assets/religions.png';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import './App.css';
 import {ApolloProvider} from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import SingleCategory from './components/SingleCategory';
-// import Login from '../src/pages/Login';
-// import Signup from '../src/pages/Signup';
-// import Profile from '../src/pages/Profile';
 
 
 const client = new ApolloClient({
@@ -59,6 +57,11 @@ function App() {
 
     { name: 'religion',
       icon: ReligionsLogo,
+    },
+
+    {
+      name: 'favorites',
+      icon: FavoritesLogo
     }
   ]);
 
@@ -70,11 +73,6 @@ function App() {
       <Router>
       <div>
         <Header></Header>
-        {/* <div>
-          <Route exact path = '/login' component = {Login} />
-          <Route exact path = '/signup' component = {Signup} />
-          <Route exact path = '/profile/:username?' component = {Profile} />
-        </div> */}
         <Nav
         categories = {categories}
         setCurrentCategory = {setCurrentCategory}
@@ -82,7 +80,7 @@ function App() {
         ></Nav>
         
         <main>   
-          <SingleCategory currentCategory = {currentCategory}></SingleCategory>
+          <SingleCategory client = {client} currentCategory = {currentCategory}></SingleCategory>
         </main>
         
         

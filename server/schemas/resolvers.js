@@ -19,6 +19,17 @@ const resolvers = {
     charities: async (parent, {name}) => {
       const params = name ? {name} : {};
       return Charity.find(params);
+    },
+
+    savedCharities: async (parent, {username}) => {
+      const params = username ? {username} : {};
+      return Charity.find(params);
+    },
+
+    user: async (parent, {username}) => {
+      return User.findOne({username})
+        .select('-__v -password')
+        .populate('savedCharities');
     }
   },
 
@@ -60,20 +71,6 @@ const resolvers = {
         
         throw new AuthenticationError('Login required!');
     }
-
-    // removeCharity: async (parent, { charityId }, context) => {
-    //     if (context.user) {
-    //       const updatedUser = await User.findOneAndUpdate(
-    //         { _id: context.user._id },
-    //         { $pull: { savedCharities: charityId } },
-    //         { new: true }
-    //       );
-  
-    //       return updatedUser;
-    //     }
-  
-    //     throw new AuthenticationError('You need to be logged in!');
-    //   },
   }
 }
 
